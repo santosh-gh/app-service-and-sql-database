@@ -20,7 +20,7 @@ var sqlDatabaseName = '${prefix}-db'
 module planModule './modules/appServicePlan.bicep' = {
   name: planName
   params: {
-    location: 'Uk South'
+    location: 'UK South'
     planName: planName
   }
 }
