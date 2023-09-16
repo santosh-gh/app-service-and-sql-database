@@ -1,5 +1,5 @@
 @description('Location for all resources.')
-param location string = 'UK South'
+param location string = 'UK West'
 
 @description('The SKU of App Service Plan.')
 param sku string = 'B1'
