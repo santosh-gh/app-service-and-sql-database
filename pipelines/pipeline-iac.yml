@@ -31,6 +31,6 @@ steps:
     location: $(location)
     templateLocation: 'Linked artifact'
     csmFile: './bicep/resourcegroup.bicep' 
-    overrideParameters: '-prefix "$(prefix)" -sqlAdministratorLogin "$(sqlAdminUsername)" -sqlAdministratorLoginPassword "$(sqlAdminPassword)"'
+    #overrideParameters: '-prefix "$(prefix)" -sqlAdministratorLogin "$(sqlAdminUsername)" -sqlAdministratorLoginPassword "$(sqlAdminPassword)"'
     deploymentMode: 'Incremental'
-    deploymentName: '$(prefix)'
+    #deploymentName: '$(prefix)'
