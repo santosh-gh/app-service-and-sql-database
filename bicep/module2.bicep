@@ -1,5 +1,5 @@
 @description('Location for all resources.')
-param location string
+param location string = 'Uk South'
 
 @description('Prefix for all resources created by this template')
 param prefix string
