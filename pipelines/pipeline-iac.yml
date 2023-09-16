@@ -40,7 +40,7 @@ steps:
     azureResourceManagerConnection: $(serviceConnectionName)
     action: 'Create Or Update Resource Group'
     resourceGroupName: $(resourceGroupName)
-    location: $(location)
+    #location: $(location)
     templateLocation: 'Linked artifact'
     csmFile: './bicep/module2.bicep' 
     overrideParameters: '-location "$(location)" -prefix "$(prefix)" -sqlAdministratorLogin "$(sqlAdminUsername)" -sqlAdministratorLoginPassword "$(sqlAdminPassword)"'
