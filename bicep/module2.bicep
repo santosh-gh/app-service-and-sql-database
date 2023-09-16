@@ -1,14 +1,14 @@
-@description('Location for all resources.')
-param location string 
+// @description('Location for all resources.')
+// param location string 
 
 @description('Prefix for all resources created by this template')
 param prefix string
 
-@secure()
-param sqlAdministratorLogin string
+// @secure()
+// param sqlAdministratorLogin string
 
-@secure()
-param sqlAdministratorLoginPassword string
+// @secure()
+// param sqlAdministratorLoginPassword string
 
 //Setup resource names
 var planName = '${prefix}-plan'
@@ -20,7 +20,7 @@ var sqlDatabaseName = '${prefix}-db'
 module planModule './modules/appServicePlan.bicep' = {
   name: planName
   params: {
-    location: location
+    location: 'UK South'
     planName: planName
   }
 }
