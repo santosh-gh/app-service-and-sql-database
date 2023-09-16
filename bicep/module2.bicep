@@ -1,5 +1,5 @@
 @description('Location for all resources.')
-param location string = resourceGroup().location
+param location string = 'UK South'
 
 @description('Prefix for all resources created by this template')
 param prefix string
@@ -20,7 +20,7 @@ var sqlDatabaseName = '${prefix}-db'
 module planModule './modules/appServicePlan.bicep' = {
   name: planName
   params: {
-    location: resourceGroup().location
+    location: location
     planName: planName
   }
 }
