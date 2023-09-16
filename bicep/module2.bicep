@@ -1,5 +1,5 @@
 @description('Location for all resources.')
-param location string = 'Uk South'
+param location1 string = 'Uk South'
 
 @description('Prefix for all resources created by this template')
 param prefix string
@@ -20,7 +20,7 @@ var sqlDatabaseName = '${prefix}-db'
 module planModule './modules/appServicePlan.bicep' = {
   name: planName
   params: {
-    location: location
+    location: location1
     planName: planName
   }
 }
@@ -29,7 +29,7 @@ module planModule './modules/appServicePlan.bicep' = {
 module apiAppModule './modules/appService.bicep' = {
   name: apiAppName
   params: {
-    location: location
+    location: location1
     appName: apiAppName
     planId: planModule.outputs.planId
     connectionStrings: [{
@@ -46,7 +46,7 @@ module apiAppModule './modules/appService.bicep' = {
 module sqlServerModule './modules/sqlServer.bicep' = {
   name: sqlServerName
   params: {
-    location: location
+    location: location1
     sqlServerName: sqlServerName
     sqlAdministratorLogin: sqlAdministratorLogin
     sqlAdministratorLoginPassword: sqlAdministratorLoginPassword
@@ -59,7 +59,7 @@ module sqlServerModule './modules/sqlServer.bicep' = {
 module databaseModule './modules/sqlDatabase.bicep' = {
   name: sqlDatabaseName
   params: {
-    location: location
+    location: location1
     sqlServerName: sqlServerModule.outputs.serverName
     databaseName: sqlDatabaseName
   }
