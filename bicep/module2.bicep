@@ -1,5 +1,6 @@
-@description('Location for all resources.')
-param location string = resourceGroup().location
+// targetScope = resourceGroup('b798c28b-e334-4ecf-b338-ec314ced3616', 'example-rg')
+// @description('Location for all resources.')
+// param location string = resourceGroup().location
 
 @description('Prefix for all resources created by this template')
 param prefix string
@@ -21,7 +22,7 @@ module planModule './modules/appServicePlan.bicep' = {
   name: planName
   scope: resourceGroup('b798c28b-e334-4ecf-b338-ec314ced3616', 'example-rg')
   params: {
-    location: location
+    location: resourceGroup().location
     planName: planName
   }
 }
@@ -31,7 +32,7 @@ module apiAppModule './modules/appService.bicep' = {
   name: apiAppName
   scope: resourceGroup('b798c28b-e334-4ecf-b338-ec314ced3616', 'example-rg')
   params: {
-    location: location
+    location: resourceGroup().location
     appName: apiAppName
     planId: planModule.outputs.planId
     connectionStrings: [{
@@ -49,7 +50,7 @@ module sqlServerModule './modules/sqlServer.bicep' = {
   name: sqlServerName
   scope: resourceGroup('b798c28b-e334-4ecf-b338-ec314ced3616', 'example-rg')
   params: {
-    location: location
+    location: resourceGroup().location
     sqlServerName: sqlServerName
     sqlAdministratorLogin: sqlAdministratorLogin
     sqlAdministratorLoginPassword: sqlAdministratorLoginPassword
@@ -63,7 +64,7 @@ module databaseModule './modules/sqlDatabase.bicep' = {
   name: sqlDatabaseName
   scope: resourceGroup('b798c28b-e334-4ecf-b338-ec314ced3616', 'example-rg')
   params: {
-    location: location
+    location: resourceGroup().location
     sqlServerName: sqlServerModule.outputs.serverName
     databaseName: sqlDatabaseName
   }
