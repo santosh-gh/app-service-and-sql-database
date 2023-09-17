@@ -1,6 +1,6 @@
-targetScope = 'subscription'
+targetScope = 'resourceGroup'
 @description('Location for all resources.')
-param location string = resourceGroup('example-rg').location
+param location string = resourceGroup().location
 
 @description('Prefix for all resources created by this template')
 param prefix string
