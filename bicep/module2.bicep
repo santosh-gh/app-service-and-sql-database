@@ -1,6 +1,5 @@
-targetScope = 'subscription'
 @description('Location for all resources.')
-param location string = deployment().location
+param location string = resourceGroup().location
 
 @description('Prefix for all resources created by this template')
 param prefix string
@@ -20,6 +19,7 @@ var sqlDatabaseName = '${prefix}-db'
 //Create the App Service Plan
 module planModule './modules/appServicePlan.bicep' = {
   name: planName
+  scope: resourceGroup('b798c28b-e334-4ecf-b338-ec314ced3616', 'example-rg')
   params: {
     location: location
     planName: planName
@@ -29,6 +29,7 @@ module planModule './modules/appServicePlan.bicep' = {
 //Create the API App Service
 module apiAppModule './modules/appService.bicep' = {
   name: apiAppName
+  scope: resourceGroup('b798c28b-e334-4ecf-b338-ec314ced3616', 'example-rg')
   params: {
     location: location
     appName: apiAppName
@@ -46,6 +47,7 @@ module apiAppModule './modules/appService.bicep' = {
 //Create the SQL Server
 module sqlServerModule './modules/sqlServer.bicep' = {
   name: sqlServerName
+  scope: resourceGroup('b798c28b-e334-4ecf-b338-ec314ced3616', 'example-rg')
   params: {
     location: location
     sqlServerName: sqlServerName
@@ -59,6 +61,7 @@ module sqlServerModule './modules/sqlServer.bicep' = {
 //Create the SQL Database
 module databaseModule './modules/sqlDatabase.bicep' = {
   name: sqlDatabaseName
+  scope: resourceGroup('b798c28b-e334-4ecf-b338-ec314ced3616', 'example-rg')
   params: {
     location: location
     sqlServerName: sqlServerModule.outputs.serverName
