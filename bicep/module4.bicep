@@ -21,7 +21,7 @@ param azureDevOpsUrl string
 param azureDevOpsAgentPool string
 
 @description('The number of build agents to create.')
-param agentCount int = 2
+param agentCount int = 1
 
 //Setup resource names
 var vnetName = '${prefix}-vnet'

@@ -5,7 +5,7 @@ trigger:
   paths:
     include:
     - bicep/modules
-    - bicep/module2.bicep
+    - bicep/module4.bicep
     - pipelines/pipeline-iac.yml
 
 name: IaC Module
@@ -26,7 +26,8 @@ steps:
     resourceGroupName: $(resourceGroupName)
     location: $(location)
     templateLocation: 'Linked artifact'
-    csmFile: './bicep/module3.bicep' 
-    overrideParameters: '-prefix "$(prefix)" -sqlAdministratorLogin "$(sqlAdminUsername)" -sqlAdministratorLoginPassword "$(sqlAdminPassword)"'
+    csmFile: './bicep/module4.bicep' 
+    #overrideParameters: '-prefix "$(prefix)" -sqlAdministratorLogin "$(sqlAdminUsername)" -sqlAdministratorLoginPassword "$(sqlAdminPassword)"'
+    overrideParameters: '-prefix "$(prefix)" -sqlAdministratorLogin "$(sqlAdminUsername)" -sqlAdministratorLoginPassword "$(sqlAdminPassword)" -azureDevOpsToken "$(System.AccessToken)" -azureDevOpsUrl "$(System.CollectionUri)" -azureDevOpsAgentPool "$(agentPoolName)"'
     deploymentMode: 'Incremental'
     deploymentName: '$(prefix)'
