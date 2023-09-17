@@ -1,6 +1,6 @@
+targetScope = 'subscription'
 @description('Location for all resources.')
-param location string = 'UK West'
-
+param location string = resourceGroup('example-rg').location
 
 @description('Prefix for all resources created by this template')
 param prefix string
