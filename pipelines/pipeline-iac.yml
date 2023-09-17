@@ -5,8 +5,10 @@ trigger:
   paths:
     include:
     - bicep/modules
-    - bicep/module4.bicep
+    - bicep/module5.bicep
     - pipelines/pipeline-iac.yml
+    - pipelines/templates
+    - scripts
 
 name: IaC Module
 
@@ -17,17 +19,27 @@ pool:
   vmImage: ubuntu-latest
 
 steps:
-- task: AzureResourceManagerTemplateDeployment@3
-  displayName: Deploy with Bicep
-  inputs:
-    deploymentScope: 'Resource Group'
-    azureResourceManagerConnection: $(serviceConnectionName)
-    action: 'Create Or Update Resource Group'
-    resourceGroupName: $(resourceGroupName)
-    location: $(location)
-    templateLocation: 'Linked artifact'
-    csmFile: './bicep/module4.bicep' 
-    #overrideParameters: '-prefix "$(prefix)" -sqlAdministratorLogin "$(sqlAdminUsername)" -sqlAdministratorLoginPassword "$(sqlAdminPassword)"'
-    overrideParameters: '-prefix "$(prefix)" -sqlAdministratorLogin "$(sqlAdminUsername)" -sqlAdministratorLoginPassword "$(sqlAdminPassword)" -azureDevOpsToken "$(System.AccessToken)" -azureDevOpsUrl "$(System.CollectionUri)" -azureDevOpsAgentPool "$(agentPoolName)"'
-    deploymentMode: 'Incremental'
-    deploymentName: '$(prefix)'
+# - task: AzureResourceManagerTemplateDeployment@3
+#   displayName: Deploy with Bicep
+#   inputs:
+#     deploymentScope: 'Resource Group'
+#     azureResourceManagerConnection: $(serviceConnectionName)
+#     action: 'Create Or Update Resource Group'
+#     resourceGroupName: $(resourceGroupName)
+#     location: $(location)
+#     templateLocation: 'Linked artifact'
+#     csmFile: './bicep/module4.bicep' 
+#     #overrideParameters: '-prefix "$(prefix)" -sqlAdministratorLogin "$(sqlAdminUsername)" -sqlAdministratorLoginPassword "$(sqlAdminPassword)"'
+#     overrideParameters: '-prefix "$(prefix)" -sqlAdministratorLogin "$(sqlAdminUsername)" -sqlAdministratorLoginPassword "$(sqlAdminPassword)" -azureDevOpsToken "$(System.AccessToken)" -azureDevOpsUrl "$(System.CollectionUri)" -azureDevOpsAgentPool "$(agentPoolName)"'
+#     deploymentMode: 'Incremental'
+#     deploymentName: '$(prefix)'
+
+  - template: templates/deploy-iac-template.yaml
+    parameters:
+      serviceConnectionName: $(serviceConnectionName)
+      prefix: $(prefix)
+      webAppUserEmail: $(webAppUserEmail)
+      resourceGroupName: $(resourceGroupName)
+      location: $(location)
+      agentPoolName: $(agentPoolName)
+      sqlAdminObjectId: $(sqlAdminObjectId)
