@@ -20,13 +20,13 @@ steps:
 - task: AzureResourceManagerTemplateDeployment@3
   displayName: Deploy with Bicep
   inputs:
-    deploymentScope: 'Subscription'
+    deploymentScope: 'Resource Group'
     azureResourceManagerConnection: $(serviceConnectionName)
     action: 'Create Or Update Resource Group'
     resourceGroupName: $(resourceGroupName)
     location: $(location)
     templateLocation: 'Linked artifact'
-    csmFile: './bicep/module2.bicep' 
+    csmFile: './bicep/module3.bicep' 
     overrideParameters: '-prefix "$(prefix)" -sqlAdministratorLogin "$(sqlAdminUsername)" -sqlAdministratorLoginPassword "$(sqlAdminPassword)"'
     deploymentMode: 'Incremental'
     deploymentName: '$(prefix)'
