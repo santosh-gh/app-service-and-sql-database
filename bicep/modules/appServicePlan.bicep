@@ -1,5 +1,5 @@
 @description('Location for all resources.')
-param location string = resourceGroup().location
+param location string
 
 @description('The SKU of App Service Plan.')
 param sku string = 'B1'
