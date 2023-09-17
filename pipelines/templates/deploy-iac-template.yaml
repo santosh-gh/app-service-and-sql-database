@@ -36,7 +36,7 @@ steps:
 - task: AzureCLI@2
   displayName: Check to see if SQL has already been deployed
   inputs:
-    azureSubscription: 'dotnet-vbd-sc'
+    azureSubscription: ${{ parameters.serviceConnectionName }}
     scriptType: 'pscore'
     scriptLocation: 'inlineScript'
     inlineScript: |
