@@ -105,5 +105,4 @@ stages:
                     appType: 'webAppLinux'
                     appName: '$(prefix)-api-app'
                     package: '$(System.ArtifactsDirectory)/**/*.zip'
-                    runtimeStack: 'DOTNETCORE|7.0'   
-        
+                    runtimeStack: 'DOTNETCORE|7.0'         
