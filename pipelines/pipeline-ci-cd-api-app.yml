@@ -48,62 +48,62 @@ stages:
           artifact: 'api-app'
           publishLocation: 'pipeline'
          
-  # - stage: deploy_to_dev
-  #   displayName: Deploy to Dev
-  #   dependsOn: ci
-  #   jobs:
-  #     - deployment: deploy_database
-  #       displayName: Deploy Database Updates to Dev
-  #       environment: dev
-  #       pool:
-  #         vmImage: 'ubuntu-latest'
-  #       strategy:
-  #        runOnce:
-  #          deploy:
-  #            steps:
-  #               - download: none
+  - stage: deploy_to_dev
+    displayName: Deploy to Dev
+    dependsOn: ci
+    jobs:
+      - deployment: deploy_database
+        displayName: Deploy Database Updates to Dev
+        environment: dev
+        pool:
+          vmImage: 'ubuntu-latest'
+        strategy:
+         runOnce:
+           deploy:
+             steps:
+                - download: none
 
-  #               - task: DownloadPipelineArtifact@2
-  #                 displayName: Download the SQL Script
-  #                 inputs:
-  #                   buildType: 'current'
-  #                   artifactName: 'api-app'
-  #                   itemPattern: '**/*.sql'
-  #                   targetPath: '$(System.ArtifactsDirectory)'
+                - task: DownloadPipelineArtifact@2
+                  displayName: Download the SQL Script
+                  inputs:
+                    buildType: 'current'
+                    artifactName: 'api-app'
+                    itemPattern: '**/*.sql'
+                    targetPath: '$(System.ArtifactsDirectory)'
 
-  #               - task: AzureCLI@2
-  #                 displayName: Run Idempotent SQL Script to Deploy to Database
-  #                 inputs:
-  #                   azureSubscription: $(serviceConnectionName)
-  #                   scriptType: 'pscore'
-  #                   scriptLocation: 'inlineScript'
-  #                   inlineScript: |
-  #                       Install-Module -Name SqlServer -Force -Scope CurrentUser
-  #                       Invoke-Sqlcmd -InputFile "$(Build.ArtifactStagingDirectory)/migrations.sql" -ServerInstance "$(prefix)-sql-server.database.windows.net" -Database "$(prefix)-db" -Username "$(sqlAdminUsername)" -Password "$(SqlAdminPassword)"
+                - task: AzureCLI@2
+                  displayName: Run Idempotent SQL Script to Deploy to Database
+                  inputs:
+                    azureSubscription: $(serviceConnectionName)
+                    scriptType: 'pscore'
+                    scriptLocation: 'inlineScript'
+                    inlineScript: |
+                        Install-Module -Name SqlServer -Force -Scope CurrentUser
+                        Invoke-Sqlcmd -InputFile "$(Build.ArtifactStagingDirectory)/migrations.sql" -ServerInstance "$(prefix)-sql-server.database.windows.net" -Database "$(prefix)-db" -Username "$(sqlAdminUsername)" -Password "$(SqlAdminPassword)"
                       
-  #     - deployment: deploy_to_dev
-  #       displayName: Deploy API to Dev
-  #       environment: dev
-  #       pool:
-  #         vmImage: 'ubuntu-latest'
-  #       strategy:
-  #        runOnce:
-  #          deploy:
-  #            steps:
-  #               - download: none
-  #               - task: DownloadPipelineArtifact@2
-  #                 displayName: Download the API Application Code
-  #                 inputs:
-  #                   buildType: 'current'
-  #                   artifactName: 'api-app'
-  #                   itemPattern: '**/*.zip'
-  #                   targetPath: '$(System.ArtifactsDirectory)'
-  #               - task: AzureWebApp@1
-  #                 displayName: Publish to App Service
-  #                 inputs:
-  #                   azureSubscription: $(serviceConnectionName)
-  #                   appType: 'webAppLinux'
-  #                   appName: '$(prefix)-api-app'
-  #                   package: '$(System.ArtifactsDirectory)/**/*.zip'
-  #                   runtimeStack: 'DOTNETCORE|7.0'   
+      - deployment: deploy_to_dev
+        displayName: Deploy API to Dev
+        environment: dev
+        pool:
+          vmImage: 'ubuntu-latest'
+        strategy:
+         runOnce:
+           deploy:
+             steps:
+                - download: none
+                - task: DownloadPipelineArtifact@2
+                  displayName: Download the API Application Code
+                  inputs:
+                    buildType: 'current'
+                    artifactName: 'api-app'
+                    itemPattern: '**/*.zip'
+                    targetPath: '$(System.ArtifactsDirectory)'
+                - task: AzureWebApp@1
+                  displayName: Publish to App Service
+                  inputs:
+                    azureSubscription: $(serviceConnectionName)
+                    appType: 'webAppLinux'
+                    appName: '$(prefix)-api-app'
+                    package: '$(System.ArtifactsDirectory)/**/*.zip'
+                    runtimeStack: 'DOTNETCORE|7.0'   
         
